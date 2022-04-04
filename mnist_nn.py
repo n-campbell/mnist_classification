@@ -6,6 +6,7 @@ import torchvision
 import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
+import matplotlib.pyplot as plt
 
 
 # Organize Dataset
@@ -114,5 +115,14 @@ for epoch in range(1, n_epochs + 1):
   train(epoch)
   test()
 
-with torch.no_grad():
-	output = network(example_data)
+
+# Make training curve plot
+
+fig = plt.figure()
+plt.plot(train_counter, train_losses, color='blue')
+plt.scatter(test_counter, test_losses, color='red')
+plt.legend(['Train Loss', 'Test Loss'], loc='upper right')
+plt.xlabel('number of training examples seen')
+plt.ylabel('negative log likelihood loss')
+plt.savefig('training_curve.png')
+
